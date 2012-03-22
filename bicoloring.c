@@ -4,7 +4,6 @@
 typedef struct graf {
     int nodes;
     int* matriz;
-    int inicial;
 } Grafo;
 
 void alocar(Grafo *grafo) 
@@ -12,7 +11,6 @@ void alocar(Grafo *grafo)
     int i,j;
     int n = grafo->nodes;
     grafo->matriz = (int*) calloc(n*n, sizeof(int));
-    grafo->inicial = -1;
 }    
 
 void liberar(Grafo *grafo) 
@@ -22,9 +20,6 @@ void liberar(Grafo *grafo)
 
 void edge(Grafo *grafo, int node1, int node2) 
 {
-    if (grafo->inicial == -1) {
-        grafo->inicial = node1;
-    }
     grafo->matriz[node1*grafo->nodes + node2] = 1;
     grafo->matriz[node2*grafo->nodes + node1] = 1;
 }
@@ -35,8 +30,7 @@ int bicoloring(Grafo grafo)
     int atual;
     int retorno;
     nodes = (int*) calloc(grafo.nodes, sizeof(int));
-    atual = grafo.inicial;
-    atual = (atual == -1)? 0 : atual; 
+    atual = 0;
     retorno = pintar(nodes, grafo, atual, 1);
     free(nodes);
     return retorno;
